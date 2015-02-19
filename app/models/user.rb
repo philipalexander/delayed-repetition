@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  
+  	has_many :cards
+  	
 	attr_accessor :password
 	before_save :encrypt_password
 

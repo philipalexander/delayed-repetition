@@ -11,14 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150211030520) do
+ActiveRecord::Schema.define(version: 20150217015629) do
 
   create_table "cards", force: true do |t|
     t.string   "front"
     t.text     "back"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "users_id"
+    t.integer  "user_id"
   end
+
+  add_index "cards", ["user_id"], name: "index_cards_on_user_id"
+  add_index "cards", ["users_id"], name: "index_cards_on_users_id"
 
   create_table "users", force: true do |t|
     t.datetime "created_at"

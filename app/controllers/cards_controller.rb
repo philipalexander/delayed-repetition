@@ -1,13 +1,13 @@
 class CardsController < ApplicationController
 	def index
-		@cards = Card.all
-	end
+		@cards = Card.all()
+  	end
 
 	def show
     	@card = Card.find(params[:id])
   	end
 
-  	def new 
+  	def new
   		@card = Card.new
 	end
 
@@ -17,7 +17,7 @@ class CardsController < ApplicationController
 
 	def create
 		@card = Card.new(card_params)
-		
+		@card = current_user.cards.new(card_params)
 		
   		if @card.save
 	    	redirect_to @card
@@ -43,6 +43,6 @@ class CardsController < ApplicationController
 
 	private
 	  def card_params
-	    params.require(:card).permit(:front, :back)
+	    params.require(:card).permit(:front, :back, :user_id)
 	  end
 end
