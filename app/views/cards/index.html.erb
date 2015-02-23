@@ -1,17 +1,19 @@
 <%= link_to "New Card", new_card_path(current_user) %>
-<h1>Your cards </h1>
+<h1>Should only be showing the cards you created</h1>
 <table>
   <tr>
     <th>front</th>
     <th>back</th>
     <th>id</th>
+
   </tr>
  
-  <% @cards.each do |card| %>
+  <% @user_cards.each do |card| %>
     <tr>
       <td><%= card.front %></td>
       <td><%= card.back %></td>
       <td><%= card.user_id %></td>
+      
       <td><%= link_to 'Show', card_path(card) %></td>
       <td><%= link_to 'Edit', edit_card_path(card) %></td>
       <td><%= link_to 'Destroy', card_path(card),
@@ -20,5 +22,3 @@
     </tr>
   <% end %>
 </table>
-
-<h2>Cards associated with your user ID</h2>

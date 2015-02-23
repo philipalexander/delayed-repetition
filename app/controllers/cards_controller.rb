@@ -1,7 +1,26 @@
 class CardsController < ApplicationController
+	#before_action :check_auth, :only => [:index]
+	
 	def index
 		@cards = Card.all()
+		@user_cards ||= []
+		@cards.each do |card|
+			if card.user_id == session[:user_id]
+				@user_cards << card
+			end
+		end
   	end
+
+  	def check_auth
+    	user = User.authenticate(params[:email], params[:password])
+	  if user
+	    session[:user_id] = user.id
+	    redirect_to controller: 'cards', :notice => "Logged in!"
+	  else
+	    flash.now.alert = "Invalid email or password"
+	    render "new"
+	  end
+	end
 
 	def show
     	@card = Card.find(params[:id])
@@ -25,6 +44,7 @@ class CardsController < ApplicationController
 	   		render 'new'
 	  	end
 	end
+
 	def update
 		@card = Card.find(params[:id])
 
